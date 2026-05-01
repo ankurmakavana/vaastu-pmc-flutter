@@ -1,0 +1,32 @@
+{
+  "project_info": {
+    "project_number": "1234567890",
+    "project_id": "vaastu-pmc-dummy",
+    "storage_bucket": "vaastu-pmc-dummy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1234567890:android:abcdef123456",
+        "android_client_info": {
+          "package_name": "com.vaastupmc.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [{ "current_key": "AIzaSyDummyKey" }],
+      "services": { "appinvite_service": { "other_platform_oauth_client": [] } }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1234567890:android:abcdef123457",
+        "android_client_info": {
+          "package_name": "com.vaastupmc.app.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [{ "current_key": "AIzaSyDummyKey" }],
+      "services": { "appinvite_service": { "other_platform_oauth_client": [] } }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,150 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     FILE: ios/Runner/Info.plist
+     ADD these keys inside the existing <dict> block.
+     Do NOT replace the entire file — merge these keys in.
+     ══════════════════════════════════════════════════════════════ -->
+
+	<!-- Camera & Photos -->
+	<key>NSCameraUsageDescription</key>
+	<string>Vaastu PMC uses the camera to capture photos for DPR reports, snag documentation, visit forms and receipts.</string>
+
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Vaastu PMC accesses your photo library to attach images to construction reports and documentation.</string>
+
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Vaastu PMC saves captured photos to your library.</string>
+
+	<!-- GPS -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Vaastu PMC uses your location to record GPS check-in and check-out at project sites.</string>
+
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Vaastu PMC uses your location for site attendance verification.</string>
+
+	<!-- Biometric -->
+	<key>NSFaceIDUsageDescription</key>
+	<string>Vaastu PMC uses Face ID to quickly and securely unlock the app.</string>
+
+	<!-- Background modes: push notifications + background fetch -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+
+	<!-- Deep link scheme -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vaastupmc</string>
+			</array>
+		</dict>
+	</array>
+
+	<!-- Associated domain for HTTPS deep links -->
+	<!-- Also add "applinks:app.vaastu-pmc.com" in Xcode Signing & Capabilities -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:app.vaastu-pmc.com</string>
+	</array>
+
+	<!-- Allow WebView local storage & IndexedDB -->
+	<key>WKAppBoundDomains</key>
+	<array>
+		<string>app.vaastu-pmc.com</string>
+	</array>
+
+	<!-- Minimum iOS version (set to 14 for webview_flutter 4.x) -->
+	<key>MinimumOSVersion</key>
+	<string>14.0</string>
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FILE: ios/Podfile  (replace existing contents)
+     ══════════════════════════════════════════════════════════════ -->
+
+# platform :ios, '14.0'
+# ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+#
+# project 'Runner', {
+#   'Debug'   => :debug,
+#   'Profile' => :release,
+#   'Release' => :release,
+# }
+#
+# def flutter_root
+#   generated = File.expand_path(
+#     File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
+#   raise "Generated.xcconfig must exist." unless File.exist?(generated)
+#   File.foreach(generated) do |line|
+#     m = line.match(/FLUTTER_ROOT\=(.*)/)
+#     return m[1].strip if m
+#   end
+#   raise "FLUTTER_ROOT not found in Generated.xcconfig"
+# end
+#
+# require File.expand_path(
+#   File.join('packages', 'flutter_tools', 'bin', 'podhelper'), flutter_root)
+#
+# flutter_ios_podfile_setup
+#
+# target 'Runner' do
+#   use_frameworks!
+#   use_modular_headers!
+#   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+#
+#   target 'RunnerTests' do
+#     inherit! :search_paths
+#   end
+# end
+#
+# post_install do |installer|
+#   installer.pods_project.targets.each do |target|
+#     flutter_additional_ios_build_settings(target)
+#     target.build_configurations.each do |config|
+#       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
+#       config.build_settings['ENABLE_BITCODE'] = 'NO'
+#     end
+#   end
+# end
+
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FILE: ios/ExportOptions.plist  (create this file)
+     Used by GitHub Actions xcodebuild -exportArchive
+     ══════════════════════════════════════════════════════════════ -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key>
+    <string>app-store</string>
+    <!-- For direct .ipa distribution (TestFlight / enterprise) use:
+    <string>ad-hoc</string>
+    -->
+    <key>teamID</key>
+    <string>YOUR_APPLE_TEAM_ID</string>
+    <key>uploadBitcode</key>
+    <false/>
+    <key>compileBitcode</key>
+    <false/>
+    <key>uploadSymbols</key>
+    <true/>
+    <key>signingStyle</key>
+    <string>manual</string>
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>com.vaastupmc.app</key>
+        <string>Vaastu PMC App Store</string>
+    </dict>
+    <key>stripSwiftSymbols</key>
+    <true/>
+    <key>thinning</key>
+    <string>&lt;none&gt;</string>
+</dict>
+</plist>
