@@ -1,0 +1,12 @@
+{
+  "name": "vaastu-pmc",
+  "version": "1.0.0",
+  "description": "Vaastu PMC - Construction Project Management Suite",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

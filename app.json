@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "Vaastu PMC",
+    "slug": "vaastu-pmc",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icons/app_icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash_logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F97316"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.vaastupmc.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icons/app_icon_foreground.png",
+        "backgroundColor": "#F97316"
+      },
+      "package": "com.vaastupmc.app"
+    },
+    "web": {
+      "favicon": "./assets/icons/app_icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f84ad05d-2679-4c94-8f46-b88d7dfd2321"
+      }
+    }
+  }
+}

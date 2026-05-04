@@ -44,3 +44,10 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .gradle_home/
+
+# Expo / EAS
+.expo/
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
