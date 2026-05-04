@@ -1,31 +1,28 @@
 {
   "project_info": {
-    "project_number": "1234567890",
-    "project_id": "vaastu-pmc-dummy",
-    "storage_bucket": "vaastu-pmc-dummy.appspot.com"
+    "project_number": "121959474926",
+    "project_id": "vaastu-pmc",
+    "storage_bucket": "vaastu-pmc.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1234567890:android:abcdef123456",
+        "mobilesdk_app_id": "1:121959474926:android:67eb78dd3e7f8bd44bf5ff",
         "android_client_info": {
           "package_name": "com.vaastupmc.app"
         }
       },
       "oauth_client": [],
-      "api_key": [{ "current_key": "AIzaSyDummyKey" }],
-      "services": { "appinvite_service": { "other_platform_oauth_client": [] } }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1234567890:android:abcdef123457",
-        "android_client_info": {
-          "package_name": "com.vaastupmc.app.debug"
+      "api_key": [
+        {
+          "current_key": "AIzaSyB931iwZWcN17hACmEuxd_tNe95VWJA6o0"
         }
-      },
-      "oauth_client": [],
-      "api_key": [{ "current_key": "AIzaSyDummyKey" }],
-      "services": { "appinvite_service": { "other_platform_oauth_client": [] } }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
     }
   ],
   "configuration_version": "1"

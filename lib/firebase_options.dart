@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,15 +25,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -50,19 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDummyKey',
-    appId: '1:1234567890:android:abcdef123456',
-    messagingSenderId: '1234567890',
-    projectId: 'vaastu-pmc-dummy',
-    storageBucket: 'vaastu-pmc-dummy.appspot.com',
+    apiKey: 'AIzaSyB931iwZWcN17hACmEuxd_tNe95VWJA6o0',
+    appId: '1:121959474926:android:67eb78dd3e7f8bd44bf5ff',
+    messagingSenderId: '121959474926',
+    projectId: 'vaastu-pmc',
+    storageBucket: 'vaastu-pmc.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'STUB-PLACEHOLDER',
-    appId: '1:1234567890:ios:stub',
-    messagingSenderId: '1234567890',
-    projectId: 'vaastu-pmc-stub',
-    storageBucket: 'vaastu-pmc-stub.appspot.com',
+    apiKey: 'AIzaSyADIaJpg3lET1juLPo5zYJcC6dTrkrQFMU',
+    appId: '1:121959474926:ios:ec694bdcc56307d74bf5ff',
+    messagingSenderId: '121959474926',
+    projectId: 'vaastu-pmc',
+    storageBucket: 'vaastu-pmc.firebasestorage.app',
     iosBundleId: 'com.vaastupmc.app',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAgVdLxLgip6LZstp5ykRvCcI_RWtxMkfo',
+    appId: '1:121959474926:web:68f31120c227b7564bf5ff',
+    messagingSenderId: '121959474926',
+    projectId: 'vaastu-pmc',
+    authDomain: 'vaastu-pmc.firebaseapp.com',
+    storageBucket: 'vaastu-pmc.firebasestorage.app',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyADIaJpg3lET1juLPo5zYJcC6dTrkrQFMU',
+    appId: '1:121959474926:ios:2c0ffeae8ace5ea24bf5ff',
+    messagingSenderId: '121959474926',
+    projectId: 'vaastu-pmc',
+    storageBucket: 'vaastu-pmc.firebasestorage.app',
+    iosBundleId: 'com.vaastupmc.vaastuPmc',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyAgVdLxLgip6LZstp5ykRvCcI_RWtxMkfo',
+    appId: '1:121959474926:web:56bc782473edda254bf5ff',
+    messagingSenderId: '121959474926',
+    projectId: 'vaastu-pmc',
+    authDomain: 'vaastu-pmc.firebaseapp.com',
+    storageBucket: 'vaastu-pmc.firebasestorage.app',
+  );
+
 }
