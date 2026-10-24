@@ -12,6 +12,13 @@ import 'utils/app_constants.dart';
 /// Background FCM handler — must be top-level, not a class method
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  debugPrint("====================");
+  debugPrint("BACKGROUND MESSAGE");
+  debugPrint("Title: ${message.notification?.title ?? message.data['title']}");
+  debugPrint("Body: ${message.notification?.body ?? message.data['body']}");
+  debugPrint("Data: ${message.data}");
+  debugPrint("====================");
+
   try {
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

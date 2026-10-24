@@ -1,11 +1,11 @@
 class AppConstants {
   AppConstants._();
 
-  static const String appName    = 'Vaastu PMC';
+  static const String appName    = 'v connect';
   static const String appTagline = 'Construction Management Suite';
 
-  /// ← CHANGE THIS to your production domain
-  static const String baseUrl    = 'https://pixelforge.lt/vaastupmc/public/login';
+  /// Single Source of Truth Production Domain
+  static const String baseUrl    = 'https://vaastuapp.vaastupmc.in';
 
   /// Deep-link scheme (must match AndroidManifest + Info.plist)
   static const String deepLinkScheme = 'vaastupmc';

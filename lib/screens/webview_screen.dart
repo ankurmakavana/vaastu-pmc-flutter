@@ -5,11 +5,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/notification_service.dart';
 import '../services/auth_service.dart';
 import '../services/storage_service.dart';
@@ -38,6 +40,7 @@ class _WebViewScreenState extends State<WebViewScreen>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    _setupDownloadChannel();
     _setupWebView(); // Initialize controller synchronously
     _initWebViewFlow();
   }
@@ -102,8 +105,41 @@ class _WebViewScreenState extends State<WebViewScreen>
         },
         onNavigationRequest: (req) {
           final url = req.url;
+          final uri = Uri.parse(url);
+          final path = uri.path.toLowerCase();
+
+          final isFileExtension = path.endsWith('.pdf') || 
+                                  path.endsWith('.xlsx') || 
+                                  path.endsWith('.csv') || 
+                                  path.endsWith('.zip') || 
+                                  path.endsWith('.doc') || 
+                                  path.endsWith('.docx');
+                                  
+          final hasDownloadQuery = uri.queryParameters['download'] == '1' ||
+                                   uri.queryParameters['download'] == 'true' ||
+                                   uri.queryParameters['export'] == '1' ||
+                                   uri.queryParameters['export'] == 'true' ||
+                                   uri.queryParameters['format'] == 'pdf' ||
+                                   uri.queryParameters['format'] == 'excel' ||
+                                   uri.queryParameters['action'] == 'download' ||
+                                   uri.queryParameters['action'] == 'export';
+                                   
+          final isDownloadEndpoint = path.contains('/api/download') ||
+                                     path.contains('/api/export') ||
+                                     path.contains('/download-file') ||
+                                     path.contains('/export-file') ||
+                                     path.contains('/export-pdf') ||
+                                     path.contains('/export-excel') ||
+                                     path.contains('/export-csv');
+
+          if (isFileExtension || hasDownloadQuery || isDownloadEndpoint) {
+            _triggerNativeDownload(url);
+            return NavigationDecision.prevent;
+          }
+
           // Allow any URL on your domain
           if (url.contains('pixelforge.lt') ||
+              url.contains('vaastupmc.in') ||
               url.startsWith('about:') ||
               url.startsWith('blob:') ||
               url.startsWith('data:')) {
@@ -349,8 +385,97 @@ class _WebViewScreenState extends State<WebViewScreen>
 
   // ── Platform info ─────────────────────────────────────────────
   Future<void> _handlePlatform(JavaScriptMessage msg) async {
+    try {
+      final data = jsonDecode(msg.message) as Map<String, dynamic>;
+      if (data['op'] == 'download') {
+        final url = data['url'] as String;
+        final filename = data['filename'] as String?;
+        _triggerNativeDownload(url, filename: filename);
+        return;
+      }
+    } catch (_) {}
+
     await _wvc.runJavaScript(
         'if(window.VaastuNative) window.VaastuNative.platform = "${Platform.operatingSystem}";');
+  }
+
+  // ── Native Download Channel ───────────────────────────────────
+  static const MethodChannel _downloadChannel = MethodChannel('com.vaastupmc.download');
+
+  void _setupDownloadChannel() {
+    _downloadChannel.setMethodCallHandler((call) async {
+      if (call.method == 'onDownloadResult') {
+        try {
+          final args = Map<String, dynamic>.from(call.arguments as Map);
+          final filename = args['filename'] as String? ?? 'File';
+          final success = args['success'] as bool? ?? false;
+          final error = args['error'] as String?;
+
+          if (!mounted) return;
+          if (success) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Download completed: $filename'),
+                backgroundColor: Colors.green.shade800,
+                duration: const Duration(seconds: 4),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Download failed: ${error ?? "Unknown error"}'),
+                backgroundColor: Colors.red.shade800,
+                duration: const Duration(seconds: 5),
+              ),
+            );
+          }
+        } catch (e) {
+          debugPrint('Error handling onDownloadResult: $e');
+        }
+      }
+    });
+  }
+
+  Future<void> _triggerNativeDownload(String url, {String? filename}) async {
+    debugPrint("TRIGGER NATIVE DOWNLOAD: $url (filename: $filename)");
+    try {
+      String mimeType = '';
+      final lowerUrl = url.toLowerCase();
+      if (lowerUrl.contains('pdf') || lowerUrl.endsWith('.pdf') || lowerUrl.contains('format=pdf')) {
+        mimeType = 'application/pdf';
+      } else if (lowerUrl.contains('excel') || lowerUrl.endsWith('.xlsx') || lowerUrl.contains('format=excel')) {
+        mimeType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+      } else if (lowerUrl.contains('csv') || lowerUrl.endsWith('.csv') || lowerUrl.contains('format=csv')) {
+        mimeType = 'text/csv';
+      }
+
+      final dynamic result = await _downloadChannel.invokeMethod('downloadFile', {
+        'url': url,
+        'filename': filename,
+        'mimeType': mimeType,
+      });
+
+      if (result != null && mounted) {
+        final displayFilename = filename ?? 'document';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Download queued: $displayFilename. Check notification bar for progress.'),
+            backgroundColor: Colors.blue.shade700,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Download failed: $e. Falling back to browser.'),
+            backgroundColor: Colors.red.shade800,
+          ),
+        );
+      }
+      launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    }
   }
 
   // ── Sync FCM token to server ──────────────────────────────────
@@ -361,10 +486,13 @@ class _WebViewScreenState extends State<WebViewScreen>
       (function(){
         var csrf = document.querySelector('meta[name="csrf-token"]');
         if(!csrf) return;
-        fetch('/api/fcm-token', {
+        fetch('/fcm-token', {
           method: 'POST',
+          credentials: 'same-origin',
           headers: {'Content-Type':'application/json','X-CSRF-TOKEN': csrf.content},
           body: JSON.stringify({token:'${_esc(token)}', platform:'${Platform.operatingSystem}'})
+        }).catch(function(e){
+          console.warn('[FCM] Token sync warning:', e);
         });
       })();
     ''');

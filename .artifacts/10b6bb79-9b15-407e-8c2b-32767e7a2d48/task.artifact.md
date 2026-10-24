@@ -1,0 +1,6 @@
+- [x] Analyze build failure reasons (SDK version, build directory redirection, environment variables)
+- [x] Update `compileSdk` and `targetSdk` to 36 in `android/app/build.gradle.kts`
+- [x] Restore and fix build directory redirection in `android/build.gradle.kts`
+- [x] Verify environment variable conflict (`ANDROID_PREFS_ROOT` vs `ANDROID_USER_HOME`)
+- [x] Successfully build release APK (verified at `build/app/outputs/flutter-apk/app-release.apk`)
+- [x] Document the fix for the user

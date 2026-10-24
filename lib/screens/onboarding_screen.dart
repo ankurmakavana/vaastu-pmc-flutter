@@ -28,7 +28,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     const _OnboardSlide(
       icon: Icons.domain_rounded,
       color: AppTheme.orange,
-      title: 'Welcome to Vaastu PMC',
+      title: 'Welcome to v connect',
       subtitle: 'Your complete construction project management suite. '
           'Track progress, manage teams, and stay on top of every site.',
     ),
@@ -102,7 +102,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             title: const Text('Enable Biometric Login?',
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 17)),
             content: const Text(
-              'Use Face ID or Fingerprint to quickly and securely open Vaastu PMC.',
+              'Use Face ID or Fingerprint to quickly and securely open v connect.',
               style: TextStyle(fontSize: 14, height: 1.5),
             ),
             actions: [

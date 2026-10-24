@@ -54,8 +54,7 @@ android {
 
     buildTypes {
         getByName("debug") {
-            applicationIdSuffix = ".debug"
-            versionNameSuffix = "-debug"
+            signingConfig = signingConfigs.getByName("debug")
         }
         getByName("release") {
             // Use release config if available, otherwise fallback to debug signing for testing

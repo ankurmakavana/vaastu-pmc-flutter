@@ -18,7 +18,7 @@ class AuthService {
   static Future<bool> authenticateBiometric() async {
     try {
       return await _auth.authenticate(
-        localizedReason: 'Authenticate to access Vaastu PMC',
+        localizedReason: 'Authenticate to access v connect',
         options: const AuthenticationOptions(
           stickyAuth:    true,
           biometricOnly: false, // allow device PIN as fallback

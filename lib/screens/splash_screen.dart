@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/app_theme.dart';
 import '../utils/app_constants.dart';
 import '../services/auth_service.dart';
+import '../services/app_update_service.dart';
 import 'onboarding_screen.dart';
 import 'webview_screen.dart';
 
@@ -41,6 +42,11 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> _navigate() async {
+    // 1. Check for App Updates first!
+    if (await AppUpdateService.checkForUpdates(context)) {
+      return; // Halt navigation! A forced update dialog is blocking the screen.
+    }
+
     final prefs         = await SharedPreferences.getInstance();
     final onboardingDone = prefs.getBool(AppConstants.keyOnboardingDone) ?? false;
 
@@ -108,7 +114,7 @@ class _SplashScreenState extends State<SplashScreen>
                       child: const Icon(Icons.domain_rounded, size: 56, color: AppTheme.orange),
                     ),
                     const SizedBox(height: 28),
-                    const Text('VAASTU PMC',
+                    const Text('V CONNECT',
                       style: TextStyle(
                         color: Colors.white, fontSize: 30,
                         fontWeight: FontWeight.w700, letterSpacing: 2.5,

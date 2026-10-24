@@ -13,7 +13,7 @@ class NotificationService {
       StreamController<String>.broadcast();
 
   static const _channelId = 'vaastu_high';
-  static const _channelName = 'Vaastu PMC Alerts';
+  static const _channelName = 'v connect Alerts';
 
   static Future<void> init() async {
     // ── Request FCM permission ────────────────────────────────
@@ -55,7 +55,15 @@ class NotificationService {
     );
 
     // ── Foreground messages ───────────────────────────────────
-    FirebaseMessaging.onMessage.listen(showLocalNotification);
+    FirebaseMessaging.onMessage.listen((msg) {
+      debugPrint("====================");
+      debugPrint("ON MESSAGE");
+      debugPrint("Title: ${msg.notification?.title ?? msg.data['title']}");
+      debugPrint("Body: ${msg.notification?.body ?? msg.data['body']}");
+      debugPrint("Data: ${msg.data}");
+      debugPrint("====================");
+      showLocalNotification(msg);
+    });
 
     // ── Background tap ─────────────────────────────────────────
     FirebaseMessaging.onMessageOpenedApp.listen((msg) {
@@ -70,19 +78,35 @@ class NotificationService {
 
     // ── Keep token fresh ──────────────────────────────────────
     FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
-      // Will be synced next time the WebView loads
+      debugPrint("[FCM] Token refreshed: $newToken");
     });
   }
 
   static Future<void> showLocalNotification(RemoteMessage msg) async {
     final n = msg.notification;
-    if (n == null) return;
-    final route = msg.data['route'] as String? ?? '/dashboard';
+    final data = msg.data;
+
+    // Support both notification object and data-only payloads
+    final String title = n?.title ?? data['title'] ?? 'v connect';
+    final String? body = n?.body ?? data['body'];
+    final String route = data['route'] as String? ?? '/dashboard';
+
+    // If both notification and body in data are missing, nothing to show
+    if (n == null && body == null) {
+      debugPrint("[FCM] Received message with no displayable content.");
+      return;
+    }
+
+    debugPrint("====================");
+    debugPrint("SHOW LOCAL NOTIFICATION");
+    debugPrint("Title: $title");
+    debugPrint("Body: $body");
+    debugPrint("====================");
 
     await _local.show(
       msg.hashCode,
-      n.title ?? 'Vaastu PMC',
-      n.body,
+      title,
+      body,
       const NotificationDetails(
         android: AndroidNotificationDetails(
           _channelId,
@@ -103,5 +127,11 @@ class NotificationService {
     );
   }
 
-  static Future<String?> getToken() => FirebaseMessaging.instance.getToken();
+  static Future<String?> getToken() async {
+    final token = await FirebaseMessaging.instance.getToken();
+    if (token != null) {
+      debugPrint("[FCM] Token generated: $token");
+    }
+    return token;
+  }
 }

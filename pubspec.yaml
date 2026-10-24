@@ -1,5 +1,5 @@
 name: vaastu_pmc
-description: Vaastu PMC – Construction Project Management Suite
+description: v connect – Construction Project Management Suite
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -40,6 +40,7 @@ dependencies:
   # ── HTTP ──────────────────────────────────────────────────────
   http: ^1.2.2
   connectivity_plus: ^6.0.5
+  url_launcher: ^6.2.5
 
   # ── UI helpers ────────────────────────────────────────────────
   flutter_svg: ^2.0.10+1
@@ -48,6 +49,7 @@ dependencies:
 
   # ── Deep links (notification tap routing) ────────────────────
   app_links: ^6.3.2
+  package_info_plus: ^9.0.1
 
 dev_dependencies:
   flutter_test:
@@ -57,12 +59,12 @@ dev_dependencies:
   flutter_native_splash: ^2.4.1
 
 # ── App icon config ───────────────────────────────────────────
-flutter_icons:
+flutter_launcher_icons:
   android: "ic_launcher"
   ios: true
-  image_path: "assets/icons/vaastu_logo.png"
-  adaptive_icon_background: "#F97316"
-  adaptive_icon_foreground: "assets/icons/vaastu_logo.png"
+  image_path: "assets/icons/v connect logo.png"
+  adaptive_icon_background: "#000000"
+  adaptive_icon_foreground: "assets/icons/v connect logo.png"
   min_sdk_android: 21
   web:
     generate: false
