@@ -6,3 +6,7 @@
 -keep class io.flutter.** { *; }
 -keep class io.flutter.plugins.** { *; }
 -keep class com.google.firebase.** { *; }
+
+# Google Play Core
+-dontwarn com.google.android.play.core.**
+-keep class com.google.android.play.core.** { *; }

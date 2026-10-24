@@ -33,7 +33,7 @@
     <uses-feature android:name="android.hardware.location.gps"     android:required="false" />
 
     <application
-        android:label="Vaastu PMC"
+        android:label="v connect"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"

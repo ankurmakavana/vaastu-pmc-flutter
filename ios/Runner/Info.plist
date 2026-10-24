@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Vaastu Pmc</string>
+	<string>v connect</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -68,21 +68,21 @@
 	</array>
 	<!-- Camera & Photos -->
 	<key>NSCameraUsageDescription</key>
-	<string>Vaastu PMC uses the camera to capture photos for DPR reports, snag documentation, visit forms and receipts.</string>
+	<string>v connect uses the camera to capture photos for DPR reports, snag documentation, visit forms and receipts.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Vaastu PMC accesses your photo library to attach images to construction reports and documentation.</string>
+	<string>v connect accesses your photo library to attach images to construction reports and documentation.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Vaastu PMC saves captured photos to your library.</string>
+	<string>v connect saves captured photos to your library.</string>
 
 	<!-- GPS -->
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Vaastu PMC uses your location to record GPS check-in and check-out at project sites.</string>
+	<string>v connect uses your location to record GPS check-in and check-out at project sites.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Vaastu PMC uses your location for site attendance verification.</string>
+	<string>v connect uses your location for site attendance verification.</string>
 
 	<!-- Biometric -->
 	<key>NSFaceIDUsageDescription</key>
-	<string>Vaastu PMC uses Face ID to quickly and securely unlock the app.</string>
+	<string>v connect uses Face ID to quickly and securely unlock the app.</string>
 
 	<!-- Background modes: push notifications + background fetch -->
 	<key>UIBackgroundModes</key>
