@@ -69,6 +69,9 @@ class MainActivity: FlutterActivity() {
                         request.setDescription("Downloading $targetFilename...")
                         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, targetFilename)
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                            request.setAllowedOverwriteFile(true)
+                        }
                         request.allowScanningByMediaScanner()
                         
                         if (mimeType != null && mimeType.isNotEmpty()) {
